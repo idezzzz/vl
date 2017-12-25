@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+    .vl {
+        border-left: 2px solid green;
+        width: 1px;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+    </style>
+    <script>
+    let slidingInterval = null
+    let translationX = 0
+    function onload() {
+      let vlElement = document.getElementById("line")
+      if (slidingInterval) {
+        clearInterval(slidingInterval)
+      }
+      slidingInterval = setInterval(function() {
+        let containerWidth = document.getElementById("root").clientWidth
+        translationX += 4
+        if (translationX >= containerWidth) {
+          translationX = 0
+        }
+        vlElement.style.transform = 'translateX(' + translationX + 'px)';
+        if (translationX % 10 == 0) {
+          console.log(translationX)
+        }
+      }, 33)
+    }
+    document.addEventListener("DOMContentLoaded", onload)
+    </script>
+  </head>
+  <body>
+    <div id="root">
+      <div class="vl" id="line"></div>
+    </div>
+  </body>
+</html>
