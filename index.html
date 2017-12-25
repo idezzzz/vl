@@ -6,7 +6,7 @@
       padding: 0px;
     }
     .vl {
-        border-left: 2px solid green;
+        border-left: 2px solid red;
         width: 1px;
         height: 100%;
         margin: 0px;
@@ -20,8 +20,9 @@
     function onload() {
       let vlElement = document.getElementById("line")
 
+      // setup keys
       document.addEventListener('keypress', (event) => {
-        const keyName = event.key;
+        const keyName = event.key
 
         if (keyName === '+') {
           let containerWidth = document.getElementById("root").clientWidth
@@ -38,9 +39,34 @@
           }
         }
 
-        console.log('keypress event\n\n' + 'key: ' + keyName);
+        console.log('keypress event\n\n' + 'key: ' + keyName)
       })
 
+      // setup Background
+      let canvas = document.createElement('canvas')
+      canvas.width = 100
+      canvas.height = 1
+      let ctx = canvas.getContext("2d")
+      ctx.beginPath()
+      ctx.moveTo(0, 0)
+      ctx.lineTo(0, 2)
+      ctx.lineWidth = 2
+      ctx.strokeStyle = '#222222'
+      ctx.stroke()
+      for (let i = 1; i < 5; ++i) {
+        ctx.beginPath()
+        ctx.moveTo(i*20, 0)
+        ctx.lineTo(i*20, 2)
+        ctx.lineWidth = 1
+        ctx.strokeStyle = '#888'
+        ctx.stroke()
+      }
+      let dataUrl = canvas.toDataURL()
+      // let imagebg = document.createElement('img')
+      // imagebg.src = dataUrl
+      document.body.style.backgroundImage = "url('"+dataUrl+"')";
+
+      // setup animation
       if (slidingInterval) {
         clearInterval(slidingInterval)
       }
