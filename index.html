@@ -16,14 +16,37 @@
     <script>
     let slidingInterval = null
     let translationX = 0
+    let speed = 4
     function onload() {
       let vlElement = document.getElementById("line")
+
+      document.addEventListener('keypress', (event) => {
+        const keyName = event.key;
+
+        if (keyName === '+') {
+          let containerWidth = document.getElementById("root").clientWidth
+          speed += 1
+          if (speed >= 0.1*containerWidth) {
+            console.log('The speed of sliding cannot be faster')
+            speed = 0.1*containerWidth
+          }
+        } else if (keyName === '-') {
+          speed -= 1
+          if (speed <= 1) {
+            console.log('The speed cannot be smaller than 1. Othrewise, the vertical line will not move')
+            speed = 1
+          }
+        }
+
+        console.log('keypress event\n\n' + 'key: ' + keyName);
+      })
+
       if (slidingInterval) {
         clearInterval(slidingInterval)
       }
       slidingInterval = setInterval(function() {
         let containerWidth = document.getElementById("root").clientWidth
-        translationX += 4
+        translationX += speed
         if (translationX >= containerWidth) {
           translationX = 0
         }
